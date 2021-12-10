@@ -8,6 +8,7 @@
     "lint": "eslint --fix .",
     "test": "jest src/",
     "test:live": "jest --watch src/",
+    "test:clean": "jest --clearCache",
     "commit": "commit",
     "prepare": "husky install && commit-msg && pre-commit",
     "commit-msg": "npx husky add .husky/commit-msg 'npx --no -- commitlint --edit $1'",

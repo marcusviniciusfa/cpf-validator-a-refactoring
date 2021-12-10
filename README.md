@@ -1,4 +1,4 @@
-## Validação de CPF
+## Validador de CPF
 
 ### Uma refatoração de código
 

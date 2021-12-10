@@ -1,38 +1,38 @@
-const maxValueGrowingStaircaseForFirstCalculation = 11
-const limitSubSplitedCpfPerDigits = 10
+const cpfRegex = /(\d{3})(\.?)(\d{3})(\.?)(\d{3})(-?)(\d{2})/g
 
-function validateCpf (cpf) {
-  const cpfIsEmpty = cpf === null || cpf === undefined
-  if (cpfIsEmpty) throw new Error('O parâmetro CPF está vazio')
-
-  if (typeof cpf !== 'string') throw new Error('O parâmetro CPF deve ser do tipo string')
-
-  const cpfRegex = /(\d{3})(\.?)(\d{3})(\.?)(\d{3})(-?)(\d{2})/g
-  if (!cpfRegex.test(cpf)) throw new Error('O parâmetro CPF não passou no padrão regex')
-
-  const cleanCpf = cpf.replace(/\.|-/g, '')
-  const splitedCpfPerDigits = cleanCpf.split('')
-  const cpfWithEqualCharacters = splitedCpfPerDigits.every(digit => digit === cleanCpf[0])
-  if (cpfWithEqualCharacters) return false
-
-  const firstVerificationDigit = calculatesTheCpfFinalDigits(maxValueGrowingStaircaseForFirstCalculation - 1, splitedCpfPerDigits, limitSubSplitedCpfPerDigits - 1)
-  const lastVerificationDigit = calculatesTheCpfFinalDigits(maxValueGrowingStaircaseForFirstCalculation, splitedCpfPerDigits, limitSubSplitedCpfPerDigits)
-  return checksTheValidityOfTheCpf(cleanCpf, firstVerificationDigit, lastVerificationDigit)
+function validateCpf (rawCpf) {
+  if (!rawCpf) throw new Error('O parâmetro CPF está vazio')
+  if (typeof rawCpf !== 'string') throw new Error('O parâmetro CPF deve ser do tipo string')
+  if (!cpfRegex.test(rawCpf)) throw new Error('O parâmetro CPF não passou no padrão regex')
+  const cleanCpf = clearCpf(rawCpf)
+  if (checkBlockedCpf(cleanCpf)) return false
+  const firstDigit = calculateDigits(cleanCpf, 10, 9)
+  const lastDigit = calculateDigits(cleanCpf, 11, 10)
+  return checkCpfValidity(cleanCpf, firstDigit, lastDigit)
 }
 
-function calculatesTheCpfFinalDigits (maxValueGrowingStaircaseForFirstCalculation, splitedCpfPerDigits, limitSubSplitedCpfPerDigits) {
-  const subSplitedCpfPerDigits = splitedCpfPerDigits.slice(0, limitSubSplitedCpfPerDigits)
-  const sumOfTheCalculationOfTheDigits = subSplitedCpfPerDigits.reduce((digitSum, currentDigit) => {
-    return digitSum + parseInt(currentDigit) * maxValueGrowingStaircaseForFirstCalculation--
+function calculateDigits (cpf, factor, limitSeparateDigits) {
+  const separateDigits = Array.from(cpf).slice(0, limitSeparateDigits)
+  const sumCalculationOfDigits = separateDigits.reduce((digitSum, currentDigit) => {
+    return digitSum + parseInt(currentDigit) * factor--
   }, 0)
-  const restOfTheDivisionByEleven = sumOfTheCalculationOfTheDigits % 11
-  return restOfTheDivisionByEleven < 2 ? 0 : 11 - restOfTheDivisionByEleven
+  const restDivisionByEleven = sumCalculationOfDigits % 11
+  return restDivisionByEleven < 2 ? 0 : 11 - restDivisionByEleven
 }
 
-function checksTheValidityOfTheCpf (cleanCpf, firstVerificationDigit, lastVerificationDigit) {
-  const digitsVerifiersPassedInTheInputCpf = cleanCpf.substring(cleanCpf.length - 2, cleanCpf.length)
-  const digitsVerifiersFromTheCalculationMadeInTheEntryCpf = `${firstVerificationDigit}${lastVerificationDigit}`
-  return digitsVerifiersPassedInTheInputCpf === digitsVerifiersFromTheCalculationMadeInTheEntryCpf
+function checkCpfValidity (cpf, firstDigit, lastDigit) {
+  const enteredDigits = cpf.slice(9)
+  const calculatedDigits = `${firstDigit}${lastDigit}`
+  return enteredDigits === calculatedDigits
+}
+
+function clearCpf (cpf) {
+  return cpf.replace(/\D/g, '')
+}
+
+function checkBlockedCpf (cpf) {
+  const firstDigit = cpf[0]
+  return [...cpf].every(currentDigit => currentDigit === firstDigit)
 }
 
 module.exports = { validateCpf }
