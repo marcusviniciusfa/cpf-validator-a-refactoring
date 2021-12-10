@@ -1,0 +1,4 @@
+{
+  "*.{spec.js, test.js}": ["npm run test"],
+  "*.js": ["npm run lint"]
+}

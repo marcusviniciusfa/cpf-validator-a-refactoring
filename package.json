@@ -1,0 +1,30 @@
+{
+  "name": "project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "validate-cpf-after.js",
+  "scripts": {
+    "start": "node src/validate-cpf-after.js",
+    "lint": "eslint --fix .",
+    "test": "jest src/",
+    "test:live": "jest --watch src/",
+    "commit": "commit",
+    "prepare": "husky install && commit-msg && pre-commit",
+    "commit-msg": "npx husky add .husky/commit-msg 'npx --no -- commitlint --edit $1'",
+    "pre-commit": "npx husky add .husky/pre-commit 'npx lint-staged -v'"
+  },
+  "author": "Marcus Vinicius",
+  "license": "ISC",
+  "devDependencies": {
+    "@commitlint/cli": "^15.0.0",
+    "@commitlint/config-conventional": "^15.0.0",
+    "@commitlint/prompt-cli": "^15.0.0",
+    "eslint": "^7.32.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.2.0",
+    "husky": "^7.0.4",
+    "jest": "^27.4.2"
+  }
+}

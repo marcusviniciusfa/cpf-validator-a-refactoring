@@ -1,0 +1,10 @@
+{
+  "env": {
+    "commonjs": true,
+    "es2021": true,
+    "node": true
+  },
+  "extends": ["standard", "eslint:recommended"],
+  "ignorePatterns": ["**/*before.js"],
+  "rules": {}
+}
