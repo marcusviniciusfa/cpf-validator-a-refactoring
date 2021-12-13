@@ -2,7 +2,14 @@
 
 ### Uma refatoração de código
 
-Exercício de refatoração, feito "sem cola", após a primeira aula do curso [Clean Code e Clean Architecture](https://app.branas.io/public/products) (Turma 4) do mestre [Rodrigo Branas](https://www.linkedin.com/in/rodrigobranas/)
+> Refatoração é uma _"alteração feita na estrutura
+> interna do software para
+> torná-lo mais fácil de ser
+> entendido e menos custoso de ser modificado,
+> sem alterar o seu comportamento observável."_
+> \- Martin Fowler
+
+Este repositório contém um exercício de refatoração, feito após a primeira aula do curso [Clean Code e Clean Architecture](https://app.branas.io/public/products) (Turma 4) do mestre [Rodrigo Branas](https://www.linkedin.com/in/rodrigobranas/)
 
 #### Documentação
 
