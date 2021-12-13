@@ -11,6 +11,15 @@ function validateCpf (rawCpf) {
   return checkCpfValidity(cleanCpf, firstDigit, lastDigit)
 }
 
+function clearCpf (cpf) {
+  return cpf.replace(/\D/g, '')
+}
+
+function checkBlockedCpf (cpf) {
+  const firstDigit = cpf[0]
+  return [...cpf].every(currentDigit => currentDigit === firstDigit)
+}
+
 function calculateDigits (cpf, factor, limitSeparateDigits) {
   const separateDigits = Array.from(cpf).slice(0, limitSeparateDigits)
   const sumCalculationOfDigits = separateDigits.reduce((digitSum, currentDigit) => {
@@ -24,15 +33,6 @@ function checkCpfValidity (cpf, firstDigit, lastDigit) {
   const enteredDigits = cpf.slice(9)
   const calculatedDigits = `${firstDigit}${lastDigit}`
   return enteredDigits === calculatedDigits
-}
-
-function clearCpf (cpf) {
-  return cpf.replace(/\D/g, '')
-}
-
-function checkBlockedCpf (cpf) {
-  const firstDigit = cpf[0]
-  return [...cpf].every(currentDigit => currentDigit === firstDigit)
 }
 
 module.exports = { validateCpf }
